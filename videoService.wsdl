@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="VedioUploadPortTypeService" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://media-inc.co.jp/video" targetNamespace="http://media-inc.co.jp/video">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://media-inc.co.jp/video">
+      <!-- 要求メッセージの wrapper要素 -->
+      <xsd:element name="videoInfo" type="tns:videoInfo" />
+      <xsd:element name="search" type="tns:search" />
+      <xsd:element name="login" type="tns:login" />
+      <xsd:element name="uploadVideo" type="tns:uploadVideo" />
+      <!-- 応答メッセージの wrapper要素 -->
+      <xsd:element name="videoInfoResponse" type="tns:videoInfoResponse" />
+      <xsd:element name="searchResponse" type="tns:searchResponse" />
+      <xsd:element name="loginResponse" type="tns:loginResponse" />
+      <xsd:element name="loginResponse" type="tns:loginResponse" />
+      <!-- フォルトメッセージの wrapper要素 -->
+      <xsd:element name="UserDefinedFault" type="tns:UserDefinedFault" />
+      <!-- 要求メッセージの wrapper要素が参照する型 -->
+      <xsd:complexType name="videoInfo">
+        <xsd:sequence>
+          <xsd:element name="groupid" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="search">
+        <xsd:sequence>
+          <xsd:element name="patientName" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="uploadVideo">
+        <xsd:sequence>
+          <xsd:element name="patientId" type="xsd:string" />
+          <xsd:element name="clinicId" type="xsd:string" />
+          <xsd:element name="photographDate" type="xsd:date" />
+          <xsd:element name="videoFiles" minOccurs="1" maxOccurs="unbounded" type="xsd:base64Binary" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="patientInfo">
+        <xsd:sequence>
+          <xsd:element name="patientId" type="xsd:string" />
+          <xsd:element name="patientName" type="xsd:string" />
+          <xsd:element name="patientOld" type="xsd:string" />
+          <xsd:element name="patientSex" type="xsd:string" />
+          <xsd:element name="clinicId" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <!-- ログイン要求メッセージ -->
+      <xsd:complexType name="login">
+        <xsd:sequence>
+          <xsd:element name="groupid" type="xsd:string" />
+          <xsd:element name="userid" type="xsd:string" />
+          <xsd:element name="password" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <!-- 応答メッセージの wrapper要素が参照する型 -->
+      <xsd:complexType name="videoInfoResponse">
+        <xsd:sequence>
+          <xsd:element name="videoFolderInfo" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="searchResponse">
+        <xsd:sequence>
+          <xsd:element name="patientList" minOccurs="0" maxOccurs="unbounded" type="tns:patientInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="loginResponse">
+        <xsd:sequence>
+          <xsd:element name="loginResult" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="uploadVideoResponse">
+        <xsd:sequence>
+          <xsd:element name="videoFileName" minOccurs="0" maxOccurs="unbounded" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <!-- フォルトメッセージの wrapper要素が参照する型 -->
+      <xsd:complexType name="UserDefinedFault">
+        <xsd:sequence>
+          <xsd:element name="additionalInfo" type="xsd:int" />
+          <xsd:element name="detail" type="xsd:string" />
+          <xsd:element name="message" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <!-- 動画アップロード要求メッセージ -->
+  <wsdl:message name="uploadVideoRequest">
+    <wsdl:part name="inputParameters" element="tns:uploadVideo" />
+  </wsdl:message>
+  <!-- ログイン要求メッセージ -->
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="inputParameters" element="tns:login" />
+  </wsdl:message>
+  <!-- フォルダ情報要求メッセージ -->
+  <wsdl:message name="videoInfoRequest">
+    <wsdl:part name="inputParameters" element="tns:videoInfo" />
+  </wsdl:message>
+  <!-- 患者名検索要求メッセージ -->
+  <wsdl:message name="searchRequest">
+    <wsdl:part name="inputParameters" element="tns:search" />
+  </wsdl:message>
+  <!-- 動画アップロードメッセージ -->
+  <wsdl:message name="uploadVideoResponse">
+    <wsdl:part name="outputParameters" element="tns:uploadVideoResponse" />
+  </wsdl:message>
+  <!-- ログイン応答メッセージ -->
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="outputParameters" element="tns:loginResponse" />
+  </wsdl:message>
+  <!-- フォルダ情報応答メッセージ -->
+  <wsdl:message name="videoInfoResponse">
+    <wsdl:part name="outputParameters" element="tns:videoInfoResponse" />
+  </wsdl:message>
+  <!-- 患者名検索応答メッセージ -->
+  <wsdl:message name="searchResponse">
+    <wsdl:part name="outputParameters" element="tns:searchResponse" />
+  </wsdl:message>
+  <!-- フォルトメッセージ -->
+  <wsdl:message name="UserDefinedException">
+    <wsdl:part name="fault" element="tns:UserDefinedFault" />
+  </wsdl:message>
+  <!-- ポートタイプ -->
+  <wsdl:portType name="VedioUploadPortType">
+    <!-- 動画アップロードポートタイプ -->
+    <wsdl:operation name="uploadVideo">
+      <wsdl:input message="tns:uploadVideoRequest" />
+      <wsdl:output message="tns:uploadVideoResponse" />
+      <wsdl:fault name="UserDefinedFault" message="tns:UserDefinedException" />
+    </wsdl:operation>
+    <!-- ログインポートタイプ -->
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:loginRequest" />
+      <wsdl:output message="tns:loginResponse" />
+      <wsdl:fault name="UserDefinedFault" message="tns:UserDefinedException" />
+    </wsdl:operation>
+    <!-- 患者名検索ポートタイプ -->
+    <wsdl:operation name="search">
+      <wsdl:input message="tns:searchRequest" />
+      <wsdl:output message="tns:searchResponse" />
+      <wsdl:fault name="UserDefinedFault" message="tns:UserDefinedException" />
+    </wsdl:operation>
+    <!-- フォルダ情報ポートタイプ -->
+    <wsdl:operation name="videoInfo">
+      <wsdl:input message="tns:videoInfoRequest" />
+      <wsdl:output message="tns:videoInfoResponse" />
+      <wsdl:fault name="UserDefinedFault" message="tns:UserDefinedException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <!-- バインディング(SOAP 1.2/HTTPバインディング) -->
+  <wsdl:binding name="VedioUploadBinding" type="tns:VedioUploadPortType">
+    <!-- document/literal/wrapped -->
+    <soap12:binding style="document" transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" />
+    <!-- 動画アップロードオペレーション -->
+    <wsdl:operation name="uploadVideo">
+      <soap12:operation />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserDefinedFault">
+        <soap12:fault name="UserDefinedFault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <!-- ログインオペレーション -->
+    <wsdl:operation name="login">
+      <soap12:operation />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserDefinedFault">
+        <soap12:fault name="UserDefinedFault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <!-- 患者名検索オペレーション -->
+    <wsdl:operation name="search">
+      <soap12:operation />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserDefinedFault">
+        <soap12:fault name="UserDefinedFault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <!-- フォルダ情報オペレーション -->
+    <wsdl:operation name="videoInfo">
+      <soap12:operation />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserDefinedFault">
+        <soap12:fault name="UserDefinedFault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!-- サービス -->
+  <wsdl:service name="VedioUploadPortTypeService">
+    <!-- ポート -->
+    <wsdl:port name="VedioUploadPortType" binding="tns:VedioUploadBinding">
+      <soap12:address location="http://localhost:8085/fromwsdl/VedioUploadService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
