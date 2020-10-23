@@ -14,4 +14,38 @@ Porxy 172.17.4.11:3128
 
 で、動作自体は確認できるかと思います。
 
-田辺。
+https://api.xxx.xxx/mediaAuth/deviceauth/{グループID}/{端末ID}
+https://api.xxx.xxx/mediaAuth/devices/{グループID}
+https://apidev.withyou.media/mediaAuth/devices/888888/G9jMv9HEmlU3Y1DVqWPr?productKbn=1
+
+
+http://apitdev.withyou.media/mediaAuth/devices/701701/
+
+https://apidev.withyou.media/mediaAuth/devices/888888/G9jMv9HEmlU3Y1DVqWPr?productKbn=3
+
+
+https://apidev.withyou.media/mediaAuth/deviceauth/888888/G9jMv9HEmlU3Y1DVqWPr?productKbn=3
+
+https://dev.withyou.media/login
+
+groupId 701701
+userId  testuser001
+pswd  Media12@
+productKbn 3
+deviceName 21900388HA
+
+https://apidev.withyou.media/mediaAuth/devices/authkey/701701
+
+https://apidev.withyou.media/mediaAuth/deviceauth/701701/G9jMv9HEmlU3Y1DVqWPr?productKbn=3
+
+https://apidev.withyou.media/mediaAuth/deviceauth/888888/G9jMv9HEmlU3Y1DVqWPr?productKbn=3
+
+https://apitest.withyou.media/mediaAuth/deviceauth/888888/G9jMv9HEmlU3Y1DVqWPr?productKbn=3
+
+
+
+グループID：701701
+医院ID：701701
+ユーザーID：testuser001 ～ testuser007
+パスワード：Media12@
+
