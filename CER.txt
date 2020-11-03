@@ -1,0 +1,243 @@
+https://localhost:44311/VedioUploadService.asmx
+
+
+String certificatesTrustStorePath = "c:/Apps/Java/jdk1.8.0_25/jre/lib/security/cacerts"; 
+System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath); 
+
+
+System.setProperty("javax.net.ssl.trustStore", "C:/.keystore");
+System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+
+
+-Djavax.net.ssl.trustStore=C:\.keystore -Djavax.net.ssl.trustStorePassword=changeit ---param value
+
+
+String certificatesTrustStorePath = "/etc/alternatives/jre/lib/security/cacerts";
+System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
+System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+
+
+keytool -genkey -alias keyAlias-keyalg RSA  -keypass changeit  -storepass changeit -keystore keystore.jks
+
+keytool -genkeypair -alias keystore_alias -keyalg RSA -keypass test123 -keystore keystore.jks -storepass test123
+
+
+localhost:44311
+
+
+keytool -exportcert -alias localhost-1 -keystore jssecacerts -storepass changeit -file woot.com.cer
+
+Added certificate to keystore 'jssecacerts' using alias 'localhost-1'
+
+
+keytool -importcert -alias woot.com -keystore D:/tools/pleiades/java/8/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
+
+=========================================================
+手順
+=========================================================
+D:\tools\pleiades\workspace\VideoManager\bin>java jp.co.inc.media.vedio.utils.InstallCert localhost:44311
+Loading KeyStore D:\tools\pleiades\java\8\jre\lib\security\cacerts...
+Opening connection to localhost:44311 ...
+Starting SSL handshake...
+
+javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification p
+        at sun.security.ssl.Alerts.getSSLException(Alerts.java:192)
+        at sun.security.ssl.SSLSocketImpl.fatal(SSLSocketImpl.java:1964)
+        at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:328)
+        at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:322)
+        at sun.security.ssl.ClientHandshaker.serverCertificate(ClientHandshaker.java:1614)
+        at sun.security.ssl.ClientHandshaker.processMessage(ClientHandshaker.java:216)
+        at sun.security.ssl.Handshaker.processLoop(Handshaker.java:1052)
+        at sun.security.ssl.Handshaker.process_record(Handshaker.java:987)
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:1072)
+        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1385)
+        at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1413)
+        at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1397)
+        at jp.co.inc.media.vedio.utils.InstallCert.main(InstallCert.java:126)
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+        at sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:397)
+        at sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:302)
+        at sun.security.validator.Validator.validate(Validator.java:262)
+        at sun.security.ssl.X509TrustManagerImpl.validate(X509TrustManagerImpl.java:324)
+        at sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:229)
+        at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:105)
+        at jp.co.inc.media.vedio.utils.InstallCert$SavingTrustManager.checkServerTrusted(InstallCert.java:224)
+        at sun.security.ssl.AbstractTrustManagerWrapper.checkServerTrusted(SSLContextImpl.java:992)
+        at sun.security.ssl.ClientHandshaker.serverCertificate(ClientHandshaker.java:1596)
+        ... 8 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+        at sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:141)
+        at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:126)
+        at java.security.cert.CertPathBuilder.build(CertPathBuilder.java:280)
+        at sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:392)
+        ... 16 more
+
+Server sent 1 certificate(s):
+
+ 1 Subject CN=localhost
+   Issuer  CN=localhost
+   sha1    c8 3b 93 2c 92 c5 b9 99 2f 83 c8 d7 2c 63 44 10 28 02 5b 20
+   md5     a0 d8 4f d9 4b 3c b8 b2 9f 26 bf 91 27 77 29 b3
+
+Enter certificate to add to trusted keystore or 'q' to quit: [1]
+
+
+[
+[
+  Version: V3
+  Subject: CN=localhost
+  Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
+
+  Key:  Sun RSA public key, 2048 bits
+  modulus: 201162543965603361332979234541357964874703507034442330078830814125175559453734370578498243058725291597638096920718005354310704894422634193473991231922144571731896999462010809618048188311712481
+  public exponent: 65537
+  Validity: [From: Mon Sep 21 15:05:49 JST 2020,
+               To: Sun Sep 21 09:00:00 JST 2025]
+  Issuer: CN=localhost
+  SerialNumber: [    2b088d4b 14e519b9 487913c3 0337f549]
+
+Certificate Extensions: 3
+[1]: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+  serverAuth
+]
+
+[2]: ObjectId: 2.5.29.15 Criticality=false
+KeyUsage [
+  DigitalSignature
+  Key_Encipherment
+  Data_Encipherment
+]
+
+[3]: ObjectId: 2.5.29.17 Criticality=false
+SubjectAlternativeName [
+  DNSName: localhost
+]
+
+]
+  Algorithm: [SHA256withRSA]
+  Signature:
+0000: 1F 80 4D 1C 6C E6 BC A7   A8 68 CB 02 94 FC D3 BF  ..M.l....h......
+0010: A8 4A E5 7A DC 77 D3 82   B5 BE 1A B9 E6 CF D1 87  .J.z.w..........
+0020: F2 45 0F 38 96 93 45 AD   A0 09 38 B5 98 5C 41 76  .E.8..E...8..\Av
+0030: B0 D2 E0 BE B7 61 85 FA   73 14 46 FE A2 3E 7D BC  .....a..s.F..>..
+0040: 23 A5 7A 13 14 B5 AB 03   0D 52 6E 67 2D C9 7C 8E  #.z......Rng-...
+0050: 99 33 05 8D B0 1A 46 91   C8 A8 39 D0 51 3B 36 97  .3....F...9.Q;6.
+0060: A1 48 B1 61 91 EC 45 29   FA F6 7F 41 83 35 32 00  .H.a..E)...A.52.
+0070: 76 E4 F8 85 B5 E4 C1 98   A4 9D 6A 4E E2 E8 BB 54  v.........jN...T
+0080: 2B 74 BB 67 E6 1E 37 E2   66 01 B3 D3 10 17 9E A9  +t.g..7.f.......
+0090: 0D D8 17 AE F0 80 C6 39   22 60 93 CC 15 22 BA C2  .......9"`..."..
+00A0: 4E F7 94 6C 9B 09 8A D1   62 26 61 87 0B 20 7D 7C  N..l....b&a.. ..
+00B0: 0C 1E 38 F8 5B 4F 21 C8   FD A1 35 0C 84 23 52 08  ..8.[O!...5..#R.
+00C0: DE CB 26 C1 A8 5D 43 8F   6B 84 EE CA 61 FC BF 1A  ..&..]C.k...a...
+00D0: 4B F6 2A A3 80 FF 77 62   BD AB EC B1 6A 4D 16 06  K.*...wb....jM..
+00E0: 8A D7 C1 F8 A3 DB EA 6C   56 77 AB C3 EC 5F 22 55  .......lVw..._"U
+00F0: ED 8A 02 87 0E 78 B1 93   16 69 83 26 99 E5 D9 13  .....x...i.&....
+
+]
+
+Added certificate to keystore 'jssecacerts' using alias 'localhost-1'
+
+D:\tools\pleiades\workspace\VideoManager\bin>keytool -exportcert -alias localhost-1 -keystore jssecacerts -storepass changeit -file woot.com.cer
+証明書がファイル<woot.com.cer>に保存されました
+
+D:\tools\pleiades\workspace\VideoManager\bin>dir
+ ドライブ D のボリューム ラベルがありません。
+ ボリューム シリアル番号は 3630-D600 です
+
+ D:\tools\pleiades\workspace\VideoManager\bin のディレクトリ
+
+2020/11/03  19:16    <DIR>          .
+2020/11/03  19:16    <DIR>          ..
+2020/11/03  17:41    <DIR>          jp
+2020/11/03  19:14           115,545 jssecacerts
+2020/11/03  19:16               752 woot.com.cer
+               2 個のファイル             116,297 バイト
+               3 個のディレクトリ  475,930,402,816 バイトの空き領域
+
+D:\tools\pleiades\workspace\VideoManager\bin>keytool -importcert -alias woot.com -keystore D:\tools\pleiades\workspace\VideoManager\conf -storepass changeit -file woot.com.cer
+所有者: CN=localhost
+発行者: CN=localhost
+シリアル番号: 2b088d4b14e519b9487913c30337f549
+有効期間の開始日: Mon Sep 21 15:05:49 JST 2020 終了日: Sun Sep 21 09:00:00 JST 2025
+証明書のフィンガプリント:
+         MD5:  A0:D8:4F:D9:4B:3C:B8:B2:9F:26:BF:91:27:77:29:B3
+         SHA1: C8:3B:93:2C:92:C5:B9:99:2F:83:C8:D7:2C:63:44:10:28:02:5B:20
+         SHA256: 5B:44:46:15:0D:F0:F7:3D:14:28:FB:08:0F:5A:04:46:4A:8D:C1:1B:53:FA:AD:6B:91:39:B6:21:17:18:92:B7
+署名アルゴリズム名: SHA256withRSA
+サブジェクト公開鍵アルゴリズム: 2048ビットRSA鍵
+バージョン: 3
+
+拡張:
+
+#1: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+  serverAuth
+]
+
+#2: ObjectId: 2.5.29.15 Criticality=false
+KeyUsage [
+  DigitalSignature
+  Key_Encipherment
+  Data_Encipherment
+]
+
+#3: ObjectId: 2.5.29.17 Criticality=false
+SubjectAlternativeName [
+  DNSName: localhost
+]
+
+この証明書を信頼しますか。 [いいえ]:  はい
+証明書がキーストアに追加されました
+keytoolエラー: java.io.FileNotFoundException: D:\tools\pleiades\workspace\VideoManager\conf (アクセスが拒否されました。)
+
+D:\tools\pleiades\workspace\VideoManager\bin>keytool -importcert -alias woot.com -keystore D:/tools/pleiades/java/8/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
+所有者: CN=localhost
+発行者: CN=localhost
+シリアル番号: 2b088d4b14e519b9487913c30337f549
+有効期間の開始日: Mon Sep 21 15:05:49 JST 2020 終了日: Sun Sep 21 09:00:00 JST 2025
+証明書のフィンガプリント:
+         MD5:  A0:D8:4F:D9:4B:3C:B8:B2:9F:26:BF:91:27:77:29:B3
+         SHA1: C8:3B:93:2C:92:C5:B9:99:2F:83:C8:D7:2C:63:44:10:28:02:5B:20
+         SHA256: 5B:44:46:15:0D:F0:F7:3D:14:28:FB:08:0F:5A:04:46:4A:8D:C1:1B:53:FA:AD:6B:91:39:B6:21:17:18:92:B7
+署名アルゴリズム名: SHA256withRSA
+サブジェクト公開鍵アルゴリズム: 2048ビットRSA鍵
+バージョン: 3
+
+拡張:
+
+#1: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+  serverAuth
+]
+
+#2: ObjectId: 2.5.29.15 Criticality=false
+KeyUsage [
+  DigitalSignature
+  Key_Encipherment
+  Data_Encipherment
+]
+
+#3: ObjectId: 2.5.29.17 Criticality=false
+SubjectAlternativeName [
+  DNSName: localhost
+]
+
+この証明書を信頼しますか。 [いいえ]:  はい
+証明書がキーストアに追加されました
+
+D:\tools\pleiades\workspace\VideoManager\bin>dir
+ ドライブ D のボリューム ラベルがありません。
+ ボリューム シリアル番号は 3630-D600 です
+
+ D:\tools\pleiades\workspace\VideoManager\bin のディレクトリ
+
+2020/11/03  19:16    <DIR>          .
+2020/11/03  19:16    <DIR>          ..
+2020/11/03  17:41    <DIR>          jp
+2020/11/03  19:14           115,545 jssecacerts
+2020/11/03  19:16               752 woot.com.cer
+               2 個のファイル             116,297 バイト
+               3 個のディレクトリ  475,930,398,720 バイトの空き領域
+
+D:\tools\pleiades\workspace\VideoManager\bin>
