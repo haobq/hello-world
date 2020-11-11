@@ -1,3 +1,15 @@
+---------------------------------
+java jp.co.inc.media.vedio.utils.InstallCert video-manager.media-11.com:443
+
+keytool -exportcert -alias video-manager.media-11.com-1 -keystore jssecacerts -storepass changeit -file media-11.com_2020.cer
+
+keytool -importcert -alias media-11.com_2020 -keystore C:/tools/eclipse_workspace/VideoManager/bin/media-cacerts -storepass changeit -file media-11.com_2020.cer
+
+keytool -importcert -alias woot.com -keystore D:/tools/pleiades/java/8/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
+
+---------------------------------
+
+
 https://localhost:44311/VedioUploadService.asmx
 
 
@@ -33,7 +45,7 @@ Added certificate to keystore 'jssecacerts' using alias 'localhost-1'
 keytool -importcert -alias woot.com -keystore D:/tools/pleiades/java/8/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
 
 =========================================================
-è‡
+æ‰‹é †
 =========================================================
 D:\tools\pleiades\workspace\VideoManager\bin>java jp.co.inc.media.vedio.utils.InstallCert localhost:44311
 Loading KeyStore D:\tools\pleiades\java\8\jre\lib\security\cacerts...
@@ -139,36 +151,36 @@ SubjectAlternativeName [
 Added certificate to keystore 'jssecacerts' using alias 'localhost-1'
 
 D:\tools\pleiades\workspace\VideoManager\bin>keytool -exportcert -alias localhost-1 -keystore jssecacerts -storepass changeit -file woot.com.cer
-Ø–¾‘‚ªƒtƒ@ƒCƒ‹<woot.com.cer>‚É•Û‘¶‚³‚ê‚Ü‚µ‚½
+è¨¼æ˜æ›¸ãŒãƒ•ã‚¡ã‚¤ãƒ«<woot.com.cer>ã«ä¿å­˜ã•ã‚Œã¾ã—ãŸ
 
 D:\tools\pleiades\workspace\VideoManager\bin>dir
- ƒhƒ‰ƒCƒu D ‚Ìƒ{ƒŠƒ…[ƒ€ ƒ‰ƒxƒ‹‚ª‚ ‚è‚Ü‚¹‚ñB
- ƒ{ƒŠƒ…[ƒ€ ƒVƒŠƒAƒ‹”Ô†‚Í 3630-D600 ‚Å‚·
+ ãƒ‰ãƒ©ã‚¤ãƒ– D ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ«ãŒã‚ã‚Šã¾ã›ã‚“ã€‚
+ ãƒœãƒªãƒ¥ãƒ¼ãƒ  ã‚·ãƒªã‚¢ãƒ«ç•ªå·ã¯ 3630-D600 ã§ã™
 
- D:\tools\pleiades\workspace\VideoManager\bin ‚ÌƒfƒBƒŒƒNƒgƒŠ
+ D:\tools\pleiades\workspace\VideoManager\bin ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 
 2020/11/03  19:16    <DIR>          .
 2020/11/03  19:16    <DIR>          ..
 2020/11/03  17:41    <DIR>          jp
 2020/11/03  19:14           115,545 jssecacerts
 2020/11/03  19:16               752 woot.com.cer
-               2 ŒÂ‚Ìƒtƒ@ƒCƒ‹             116,297 ƒoƒCƒg
-               3 ŒÂ‚ÌƒfƒBƒŒƒNƒgƒŠ  475,930,402,816 ƒoƒCƒg‚Ì‹ó‚«—Ìˆæ
+               2 å€‹ã®ãƒ•ã‚¡ã‚¤ãƒ«             116,297 ãƒã‚¤ãƒˆ
+               3 å€‹ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª  475,930,402,816 ãƒã‚¤ãƒˆã®ç©ºãé ˜åŸŸ
 
 D:\tools\pleiades\workspace\VideoManager\bin>keytool -importcert -alias woot.com -keystore D:\tools\pleiades\workspace\VideoManager\conf -storepass changeit -file woot.com.cer
-Š—LÒ: CN=localhost
-”­sÒ: CN=localhost
-ƒVƒŠƒAƒ‹”Ô†: 2b088d4b14e519b9487913c30337f549
-—LŒøŠúŠÔ‚ÌŠJn“ú: Mon Sep 21 15:05:49 JST 2020 I—¹“ú: Sun Sep 21 09:00:00 JST 2025
-Ø–¾‘‚ÌƒtƒBƒ“ƒKƒvƒŠƒ“ƒg:
+æ‰€æœ‰è€…: CN=localhost
+ç™ºè¡Œè€…: CN=localhost
+ã‚·ãƒªã‚¢ãƒ«ç•ªå·: 2b088d4b14e519b9487913c30337f549
+æœ‰åŠ¹æœŸé–“ã®é–‹å§‹æ—¥: Mon Sep 21 15:05:49 JST 2020 çµ‚äº†æ—¥: Sun Sep 21 09:00:00 JST 2025
+è¨¼æ˜æ›¸ã®ãƒ•ã‚£ãƒ³ã‚¬ãƒ—ãƒªãƒ³ãƒˆ:
          MD5:  A0:D8:4F:D9:4B:3C:B8:B2:9F:26:BF:91:27:77:29:B3
          SHA1: C8:3B:93:2C:92:C5:B9:99:2F:83:C8:D7:2C:63:44:10:28:02:5B:20
          SHA256: 5B:44:46:15:0D:F0:F7:3D:14:28:FB:08:0F:5A:04:46:4A:8D:C1:1B:53:FA:AD:6B:91:39:B6:21:17:18:92:B7
-–¼ƒAƒ‹ƒSƒŠƒYƒ€–¼: SHA256withRSA
-ƒTƒuƒWƒFƒNƒgŒöŠJŒ®ƒAƒ‹ƒSƒŠƒYƒ€: 2048ƒrƒbƒgRSAŒ®
-ƒo[ƒWƒ‡ƒ“: 3
+ç½²åã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ å: SHA256withRSA
+ã‚µãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…¬é–‹éµã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ : 2048ãƒ“ãƒƒãƒˆRSAéµ
+ãƒãƒ¼ã‚¸ãƒ§ãƒ³: 3
 
-Šg’£:
+æ‹¡å¼µ:
 
 #1: ObjectId: 2.5.29.37 Criticality=false
 ExtendedKeyUsages [
@@ -187,24 +199,24 @@ SubjectAlternativeName [
   DNSName: localhost
 ]
 
-‚±‚ÌØ–¾‘‚ğM—Š‚µ‚Ü‚·‚©B [‚¢‚¢‚¦]:  ‚Í‚¢
-Ø–¾‘‚ªƒL[ƒXƒgƒA‚É’Ç‰Á‚³‚ê‚Ü‚µ‚½
-keytoolƒGƒ‰[: java.io.FileNotFoundException: D:\tools\pleiades\workspace\VideoManager\conf (ƒAƒNƒZƒX‚ª‹‘”Û‚³‚ê‚Ü‚µ‚½B)
+ã“ã®è¨¼æ˜æ›¸ã‚’ä¿¡é ¼ã—ã¾ã™ã‹ã€‚ [ã„ã„ãˆ]:  ã¯ã„
+è¨¼æ˜æ›¸ãŒã‚­ãƒ¼ã‚¹ãƒˆã‚¢ã«è¿½åŠ ã•ã‚Œã¾ã—ãŸ
+keytoolã‚¨ãƒ©ãƒ¼: java.io.FileNotFoundException: D:\tools\pleiades\workspace\VideoManager\conf (ã‚¢ã‚¯ã‚»ã‚¹ãŒæ‹’å¦ã•ã‚Œã¾ã—ãŸã€‚)
 
 D:\tools\pleiades\workspace\VideoManager\bin>keytool -importcert -alias woot.com -keystore D:/tools/pleiades/java/8/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
-Š—LÒ: CN=localhost
-”­sÒ: CN=localhost
-ƒVƒŠƒAƒ‹”Ô†: 2b088d4b14e519b9487913c30337f549
-—LŒøŠúŠÔ‚ÌŠJn“ú: Mon Sep 21 15:05:49 JST 2020 I—¹“ú: Sun Sep 21 09:00:00 JST 2025
-Ø–¾‘‚ÌƒtƒBƒ“ƒKƒvƒŠƒ“ƒg:
+æ‰€æœ‰è€…: CN=localhost
+ç™ºè¡Œè€…: CN=localhost
+ã‚·ãƒªã‚¢ãƒ«ç•ªå·: 2b088d4b14e519b9487913c30337f549
+æœ‰åŠ¹æœŸé–“ã®é–‹å§‹æ—¥: Mon Sep 21 15:05:49 JST 2020 çµ‚äº†æ—¥: Sun Sep 21 09:00:00 JST 2025
+è¨¼æ˜æ›¸ã®ãƒ•ã‚£ãƒ³ã‚¬ãƒ—ãƒªãƒ³ãƒˆ:
          MD5:  A0:D8:4F:D9:4B:3C:B8:B2:9F:26:BF:91:27:77:29:B3
          SHA1: C8:3B:93:2C:92:C5:B9:99:2F:83:C8:D7:2C:63:44:10:28:02:5B:20
          SHA256: 5B:44:46:15:0D:F0:F7:3D:14:28:FB:08:0F:5A:04:46:4A:8D:C1:1B:53:FA:AD:6B:91:39:B6:21:17:18:92:B7
-–¼ƒAƒ‹ƒSƒŠƒYƒ€–¼: SHA256withRSA
-ƒTƒuƒWƒFƒNƒgŒöŠJŒ®ƒAƒ‹ƒSƒŠƒYƒ€: 2048ƒrƒbƒgRSAŒ®
-ƒo[ƒWƒ‡ƒ“: 3
+ç½²åã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ å: SHA256withRSA
+ã‚µãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…¬é–‹éµã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ : 2048ãƒ“ãƒƒãƒˆRSAéµ
+ãƒãƒ¼ã‚¸ãƒ§ãƒ³: 3
 
-Šg’£:
+æ‹¡å¼µ:
 
 #1: ObjectId: 2.5.29.37 Criticality=false
 ExtendedKeyUsages [
@@ -223,21 +235,21 @@ SubjectAlternativeName [
   DNSName: localhost
 ]
 
-‚±‚ÌØ–¾‘‚ğM—Š‚µ‚Ü‚·‚©B [‚¢‚¢‚¦]:  ‚Í‚¢
-Ø–¾‘‚ªƒL[ƒXƒgƒA‚É’Ç‰Á‚³‚ê‚Ü‚µ‚½
+ã“ã®è¨¼æ˜æ›¸ã‚’ä¿¡é ¼ã—ã¾ã™ã‹ã€‚ [ã„ã„ãˆ]:  ã¯ã„
+è¨¼æ˜æ›¸ãŒã‚­ãƒ¼ã‚¹ãƒˆã‚¢ã«è¿½åŠ ã•ã‚Œã¾ã—ãŸ
 
 D:\tools\pleiades\workspace\VideoManager\bin>dir
- ƒhƒ‰ƒCƒu D ‚Ìƒ{ƒŠƒ…[ƒ€ ƒ‰ƒxƒ‹‚ª‚ ‚è‚Ü‚¹‚ñB
- ƒ{ƒŠƒ…[ƒ€ ƒVƒŠƒAƒ‹”Ô†‚Í 3630-D600 ‚Å‚·
+ ãƒ‰ãƒ©ã‚¤ãƒ– D ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ«ãŒã‚ã‚Šã¾ã›ã‚“ã€‚
+ ãƒœãƒªãƒ¥ãƒ¼ãƒ  ã‚·ãƒªã‚¢ãƒ«ç•ªå·ã¯ 3630-D600 ã§ã™
 
- D:\tools\pleiades\workspace\VideoManager\bin ‚ÌƒfƒBƒŒƒNƒgƒŠ
+ D:\tools\pleiades\workspace\VideoManager\bin ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 
 2020/11/03  19:16    <DIR>          .
 2020/11/03  19:16    <DIR>          ..
 2020/11/03  17:41    <DIR>          jp
 2020/11/03  19:14           115,545 jssecacerts
 2020/11/03  19:16               752 woot.com.cer
-               2 ŒÂ‚Ìƒtƒ@ƒCƒ‹             116,297 ƒoƒCƒg
-               3 ŒÂ‚ÌƒfƒBƒŒƒNƒgƒŠ  475,930,398,720 ƒoƒCƒg‚Ì‹ó‚«—Ìˆæ
+               2 å€‹ã®ãƒ•ã‚¡ã‚¤ãƒ«             116,297 ãƒã‚¤ãƒˆ
+               3 å€‹ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª  475,930,398,720 ãƒã‚¤ãƒˆã®ç©ºãé ˜åŸŸ
 
 D:\tools\pleiades\workspace\VideoManager\bin>
