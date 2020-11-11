@@ -49,3 +49,11 @@ https://apitest.withyou.media/mediaAuth/deviceauth/888888/G9jMv9HEmlU3Y1DVqWPr?p
 ユーザーID：testuser001 ～ testuser007
 パスワード：Media12@
 
+        timeSlider.valueProperty().addListener(new InvalidationListener() {
+            public void invalidated(Observable ov) {
+                if (timeSlider.isValueChanging()) {
+                    // multiply duration by percentage calculated by slider position
+                    mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+                }
+            }
+        });
