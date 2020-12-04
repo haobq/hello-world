@@ -1,0 +1,67 @@
+基本方針は上記linkと同じ
+1) pkgbuild pkgつくる
+2) productbuild distribution(といってもextensionは同じpkg)つくる
+3) productsign signする
+ここまでで ship可能な pkg をつくるところまで。
+
+ここから、さらに 1. dmg をつくり、2. Notary Service に upload して公称をうけ、3. offline時でのinstallのための staple を貼る。ところまでmemoを残します。
+4) dmg をつくる
+5) Apple Notary Service に upload して公称してもらう。
+6) staple をはる
+
+
+1) pkgをつくる
+---------------------------------
+
+1.1) pkgbuild で plist(設定file)のひな形をつくる
+
+cd ~/Library/Developer/InstallationBuildProductsLocation
+pkgbuild --analyze --root ./HelloWorld.app HelloWorldAppComponents.plist
+pkgbuild --analyze --root ./Helper.app HelperAppComponents.plist
+
+1.2) pkgbuildでpkgファイルをつくる
+
+productbuild-合成すると、配布定義が作成されます。
+
+pkgbuild --root ./HelloWorld.app  --component-plist HelloWorldAppComponents.plist   HelloWorld.pkg
+pkgbuild --root ./Helper.app  --component-plist HelperAppComponents.plist  Helper.pkg
+productbuild --synthesize --package HelloWorld.pkg --package Helper.pkg Distribution.xml 
+
+2) 次に pkg を distibution形式にします。
+
+2.1) 設定ファイル(xml)のひな形をつくる
+productbuild --synthesize --package Foo.pkg Distribution.xml
+
+
+Distribution.xmlでは、タイトル、背景、ウェルカム、readme、ライセンスなどを変更できます。
+
+2.2) pkgをdistribution形式にする
+productbuild --distribution "Distribution.xml" --package-path /path/to/pkgDir --resources "/path/to/rsrcDir" "Bar.pkg"
+
+productbuild --distribution ./Distribution.xml --package-path . ./Installer.pkg
+
+3)最後にsignしておわり
+productsign  --sign "Developer ID Installer: Somewhere Inc."  "Bar.pkg" "Installer.pkg"
+
+
+4)dmg をつくる
+hdiutil create -srcfolder "/path/to/folder" -fs HFS+ -format UDZO -volname "name_you_see_when_mounting_the_volume" "/path/to/filename.dmg"
+
+
+5) 公称をうける。
+xcrun altool --notarize-app -f "/path/to/file.dmg" --primary-bundle-id "jp.mycompany.myappname" -u me@mail.jp -p @keychain:PWD_IN_KEYCHAIN
+
+notarization で error が出た場合
+xcrun altool --notarization-info MAGIC_NUMBER_DISTRIBUTED_BY_APPLE -u me@mail.jp -p @keychain:PWD_IN_KEYCHAIN
+
+
+6) stapleをはります。
+xcrun stapler staple /path/to/dmg
+
+
+その他メモ
+pkgbuildでつくったpkgのpayloadも開きたい。
+pkgutil --expand-full [pkg] [dir]
+
+pkgの内容物をunarchiveせずに閲覧したい
+
