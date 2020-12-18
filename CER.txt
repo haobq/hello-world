@@ -1,3 +1,11 @@
+----------------20201218-------------------
+java jp.co.inc.media.video.utils.InstallCert apidev.withyou.media:443
+
+keytool -exportcert -alias apidev.withyou.media-1 -keystore jssecacerts -storepass changeit -file apidev.withyou.media2020.cer
+
+keytool -importcert -alias apidev.withyou.media2020 -keystore C:/tools/eclipse_workspace/VideoManager/bin/apidev-withyou-media-cacerts -storepass changeit -file apidev.withyou.media2020.cer
+
+
 ---------------------------------
 java jp.co.inc.media.vedio.utils.InstallCert video-manager.media-11.com:443
 
