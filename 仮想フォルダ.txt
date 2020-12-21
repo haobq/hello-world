@@ -1,0 +1,197 @@
+  <appSettings>
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true"/>
+    <add key="done_folder" value="//wyfile01.file.core.windows.net/wyfiledev01/withyouGWSV/temp/done"/>
+    <add key="err_folder" value="//wyfile01.file.core.windows.net/wyfiledev01/withyouGWSV/temp/err"/>
+  </appSettings>
+  <system.web>
+     <identity impersonate="true" userName="wyfile01" password="H63GOlYcMRyjPOOGsfMAZTcxY1sh29Rg3G2cAE2bJ57Y3yNZxIHdPryf8edMy+dfMluoa9CJUNUaDPLAOhIDCw=="/>
+  </system.web>
+-----------------------------------------------------------------------------
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="hospId"></param>
+	/// <param name="fileName"></param>
+	/// <param name="err"></param>
+	/// <param name="msgUid"></param>
+	/// <returns></returns>
+	private bool MoveFileSend(string hospId, string fileName, bool err, string msgUid)
+	{
+		bool ret = false;
+		string baseDir = "";
+		string destPath = "";
+		string[] elms = fileName.Split('_');
+
+		try
+		{
+			if (err) baseDir = ConfigurationManager.AppSettings["err_folder"];
+			else baseDir = ConfigurationManager.AppSettings["done_folder"];
+
+			// 例) err\20170525\hosp1\Send
+			destPath = string.Format(@"{0}\{1}\{2}\Send", baseDir, elms[1], hospId);
+
+			App_Function fnc = new App_Function();
+			string sql = string.Format("select * from tbl_data_set_flg where msg_uid='{0}'", msgUid);
+			string path = fnc.sqlSelect(sql, "file_path");
+
+			bool create = false;
+			if(!Directory.Exists(destPath))
+			{
+				//LogDBG(hospId, "パス無しなので作成({0})", destPath);
+				try
+				{
+					Directory.CreateDirectory(destPath);
+				}
+				catch (Exception ex)
+				{
+					err = true;
+					LogGW(hospId, err, ex.Message);
+					LogGW(hospId, err, MSG_ERR_CREATE_FOLDER, destPath);
+				}
+			}
+
+			ret = util.MoveFile(Path.Combine(path, fileName), destPath, create);
+
+			CleanUpDirectory(hospId);
+		}
+		catch (Exception ex)
+		{
+			LogGW(hospId, err, "例外発生：MoveFileSend() {0}", ex.ToString());
+			ret = false;
+		}
+
+		return ret;
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="hospId"></param>
+	/// <param name="fileName"></param>
+	/// <param name="err"></param>
+	/// <param name="byteArray"></param>
+	/// <returns></returns>
+	private bool MoveFileRecv(string hospId, string fileName, bool err, byte[] byteArray)
+	{
+		bool ret = false;
+		string baseDir = "";
+		string destPath = "";
+		string[] elms = fileName.Split('_');
+
+		try
+		{
+			if (err) baseDir = ConfigurationManager.AppSettings["err_folder"];
+			else baseDir = ConfigurationManager.AppSettings["done_folder"];
+
+			// 例) err\20170525\hosp1\Recv
+			destPath = string.Format(@"{0}\{1}\{2}\Recv", baseDir, elms[2].Substring(0,8), hospId);
+
+			//string dbg_path = @"//wyfile01.file.core.windows.net/wyfiledev01/aa";
+			//try
+			//{
+			//	Directory.CreateDirectory(dbg_path);
+			//}
+			//catch (Exception ex)
+			//{
+			//	string aa = string.Format("path[{0}] err[{1}]", dbg_path, ex.Message);
+			//	LogGW(hospId, err, ex.Message);
+			//}
+
+			if (!Directory.Exists(destPath))
+			{
+				//LogDBG(hospId, "パス無しなので作成({0})", destPath);
+				try
+				{
+					Directory.CreateDirectory(destPath);
+				}
+				catch(Exception ex)
+				{
+					err = true;
+					LogGW(hospId, err, ex.Message);
+					LogGW(hospId, err, MSG_ERR_CREATE_FOLDER, destPath);
+				}
+			}
+
+			// 対象フォルダにファイルを作成
+			string fullPath = Path.Combine(destPath, fileName);
+			if (!util.ByteArrayToFile(byteArray, fullPath))
+			{
+				LogGW(hospId, MSG_ERR_MOVE_FILE, fileName);
+			}
+
+			//string msg = "";
+			//if (err) msg = "エラーフォルダ"; else msg = "実行済みフォルダ";
+
+			CleanUpDirectory(hospId);
+		}
+		catch (Exception ex)
+		{
+			LogGW(hospId, err, "例外発生：MoveFileRecv() {0}", ex.ToString());
+			ret = false;
+		}
+
+		return ret;
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="hospId"></param>
+	public void CleanUpDirectory(string hospId)
+	{
+		try
+		{
+			string doneDir = ConfigurationManager.AppSettings["err_folder"];
+			string errDir = ConfigurationManager.AppSettings["done_folder"];
+
+			string days = ConfigurationManager.AppSettings["storage_days"];
+			string lastDirName = "";
+
+			int storageDays = util.ToInt(ConfigurationManager.AppSettings["storage_days"]);
+
+			string[] dirs = Directory.GetDirectories(doneDir);
+			foreach (string dir in dirs)
+			{
+				try
+				{
+					lastDirName = Path.GetFileName(dir);
+					DateTime createDate = DateTime.ParseExact(lastDirName, "yyyyMMdd", CultureInfo.InvariantCulture);
+
+					if (createDate.AddDays(storageDays) <= DateTime.Now)
+					{
+						try
+						{
+							Directory.Delete(dir, true);
+						}
+						catch { }   // 無処理
+					}
+				}
+				catch { }	// 無処理
+			}
+
+			dirs = Directory.GetDirectories(errDir);
+			foreach (string dir in dirs)
+			{
+				try
+				{
+					lastDirName = Path.GetFileName(dir);
+					DateTime createDate = DateTime.ParseExact(lastDirName, "yyyyMMdd", CultureInfo.InvariantCulture);
+
+					if (createDate.AddDays(storageDays) <= DateTime.Now)
+					{
+						try
+						{
+							Directory.Delete(dir, true);
+						}
+						catch { }   // 無処理
+					}
+				}
+				catch { }   // 無処理
+			}
+		}
+		catch (Exception ex)
+		{
+			// 無処理
+		}
+
+	}
