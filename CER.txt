@@ -1,3 +1,6 @@
+https://qiita.com/opengl-8080/items/51bef25aa05ecd929a3d
+
+
 ----------------20201218-------------------
 java jp.co.inc.media.video.utils.InstallCert apidev.withyou.media:443
 
