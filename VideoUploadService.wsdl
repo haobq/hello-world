@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://video.media.inc.co.jp/service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://video.media.inc.co.jp/service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://video.media.inc.co.jp/service">
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="group_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="hosp_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="session_flg" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="tns:LoginRespone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LoginRespone">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Cert" type="tns:Certification" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClinicList" type="tns:ArrayOfClinic" />
+          <s:element minOccurs="0" maxOccurs="1" name="FacilityList" type="tns:ArrayOfFacility" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Certification">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Group_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="User_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Media_auth" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Session_flg" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ErrorReponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfClinic">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Clinic" nillable="true" type="tns:Clinic" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Clinic">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfFacility">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Facility" nillable="true" type="tns:Facility" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Facility">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="visit_kbn" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetVisitList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="certification" type="tns:Certification" />
+            <s:element minOccurs="0" maxOccurs="1" name="visitDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kbn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVisitListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVisitListResult" type="tns:FacilityReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="FacilityReponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="facilities" type="tns:ArrayOfFacility" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMovieList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cert" type="tns:Certification" />
+            <s:element minOccurs="0" maxOccurs="1" name="patient_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="movie_type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="movie_index" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMovieListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMovieListResult" type="tns:MovieListReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MovieListReponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="movies" type="tns:ArrayOfMovies" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMovies">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Movies" nillable="true" type="tns:Movies" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Movies">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_id" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Movie_no" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Photo_date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_path" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_tag" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Regist_date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Kbn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mask" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="VideoDelete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cert" type="tns:Certification" />
+            <s:element minOccurs="0" maxOccurs="1" name="patient_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="movie_index" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VideoDeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VideoDeleteResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BoolRepone">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="retReslt" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ret" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ImageDelete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cert" type="tns:Certification" />
+            <s:element minOccurs="0" maxOccurs="1" name="patient_id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="movie_index" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImageDeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImageDeleteResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="certification" type="tns:Certification" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogoutResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPatient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:PatientRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PatientRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Certification" type="tns:Certification" />
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_Date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Kbn" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SearchPatientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchPatientResult" type="tns:PatientResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PatientResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="patients" type="tns:ArrayOfPatient" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPatient">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Patient" nillable="true" type="tns:Patient" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Patient">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Group_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_kana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_birthday" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_sex" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Visit_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Unique_id" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsOverCapacity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="certification" type="tns:Certification" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsOverCapacityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsOverCapacityResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHospList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="certification" type="tns:Certification" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHospListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHospListResult" type="tns:ClinicReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClinicReponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Clinics" type="tns:ArrayOfClinic" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetFacilityList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="certification" type="tns:Certification" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFacilityListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFacilityListResult" type="tns:FacilityReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaUploadMovi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:MovieRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MovieRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Certification" type="tns:Certification" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Video_no" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Video_kbn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Video_path" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Edit_user" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Video_tag" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Movie_index" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_context" type="s:base64Binary" />
+          <s:element minOccurs="1" maxOccurs="1" name="Movie_size" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="SpriteFileNo" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Millisecond" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaUploadMoviResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaUploadMoviResult" type="tns:MovieReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MovieReponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Group_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Hosp_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="User_id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Upload_movie_name" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:ErrorReponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaUploadImg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:MovieRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaUploadImgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaUploadImgResult" type="tns:MovieReponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaDelete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:DeleteRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DeleteRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Certification" type="tns:Certification" />
+          <s:element minOccurs="0" maxOccurs="1" name="Patient_id" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Movie_index" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_date" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Movie_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Video_path" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MediaDeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaDeleteResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaDeleteImg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:DeleteRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MediaDeleteImgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MediaDeleteImgResult" type="tns:BoolRepone" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVisitListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVisitList" />
+  </wsdl:message>
+  <wsdl:message name="GetVisitListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVisitListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMovieListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMovieList" />
+  </wsdl:message>
+  <wsdl:message name="GetMovieListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMovieListResponse" />
+  </wsdl:message>
+  <wsdl:message name="VideoDeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:VideoDelete" />
+  </wsdl:message>
+  <wsdl:message name="VideoDeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:VideoDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImageDeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:ImageDelete" />
+  </wsdl:message>
+  <wsdl:message name="ImageDeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:ImageDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchPatientSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchPatient" />
+  </wsdl:message>
+  <wsdl:message name="SearchPatientSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchPatientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsOverCapacitySoapIn">
+    <wsdl:part name="parameters" element="tns:IsOverCapacity" />
+  </wsdl:message>
+  <wsdl:message name="IsOverCapacitySoapOut">
+    <wsdl:part name="parameters" element="tns:IsOverCapacityResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHospListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHospList" />
+  </wsdl:message>
+  <wsdl:message name="GetHospListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHospListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFacilityListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFacilityList" />
+  </wsdl:message>
+  <wsdl:message name="GetFacilityListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFacilityListResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaUploadMoviSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaUploadMovi" />
+  </wsdl:message>
+  <wsdl:message name="MediaUploadMoviSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaUploadMoviResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaUploadImgSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaUploadImg" />
+  </wsdl:message>
+  <wsdl:message name="MediaUploadImgSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaUploadImgResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaDeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaDelete" />
+  </wsdl:message>
+  <wsdl:message name="MediaDeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="MediaDeleteImgSoapIn">
+    <wsdl:part name="parameters" element="tns:MediaDeleteImg" />
+  </wsdl:message>
+  <wsdl:message name="MediaDeleteImgSoapOut">
+    <wsdl:part name="parameters" element="tns:MediaDeleteImgResponse" />
+  </wsdl:message>
+  <wsdl:portType name="VideoUploadServiceSoap">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitList">
+      <wsdl:input message="tns:GetVisitListSoapIn" />
+      <wsdl:output message="tns:GetVisitListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMovieList">
+      <wsdl:input message="tns:GetMovieListSoapIn" />
+      <wsdl:output message="tns:GetMovieListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VideoDelete">
+      <wsdl:input message="tns:VideoDeleteSoapIn" />
+      <wsdl:output message="tns:VideoDeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImageDelete">
+      <wsdl:input message="tns:ImageDeleteSoapIn" />
+      <wsdl:output message="tns:ImageDeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <wsdl:input message="tns:SearchPatientSoapIn" />
+      <wsdl:output message="tns:SearchPatientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsOverCapacity">
+      <wsdl:input message="tns:IsOverCapacitySoapIn" />
+      <wsdl:output message="tns:IsOverCapacitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHospList">
+      <wsdl:input message="tns:GetHospListSoapIn" />
+      <wsdl:output message="tns:GetHospListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityList">
+      <wsdl:input message="tns:GetFacilityListSoapIn" />
+      <wsdl:output message="tns:GetFacilityListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadMovi">
+      <wsdl:input message="tns:MediaUploadMoviSoapIn" />
+      <wsdl:output message="tns:MediaUploadMoviSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadImg">
+      <wsdl:input message="tns:MediaUploadImgSoapIn" />
+      <wsdl:output message="tns:MediaUploadImgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaDelete">
+      <wsdl:input message="tns:MediaDeleteSoapIn" />
+      <wsdl:output message="tns:MediaDeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MediaDeleteImg">
+      <wsdl:input message="tns:MediaDeleteImgSoapIn" />
+      <wsdl:output message="tns:MediaDeleteImgSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VideoUploadServiceSoap" type="tns:VideoUploadServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitList">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/GetVisitList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovieList">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/GetMovieList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VideoDelete">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/VideoDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImageDelete">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/ImageDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/SearchPatient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsOverCapacity">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/IsOverCapacity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHospList">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/GetHospList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityList">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/GetFacilityList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadMovi">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/MediaUploadMovi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadImg">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/MediaUploadImg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaDelete">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/MediaDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaDeleteImg">
+      <soap:operation soapAction="http://video.media.inc.co.jp/service/MediaDeleteImg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="VideoUploadServiceSoap12" type="tns:VideoUploadServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitList">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/GetVisitList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovieList">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/GetMovieList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VideoDelete">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/VideoDelete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImageDelete">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/ImageDelete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/SearchPatient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsOverCapacity">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/IsOverCapacity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHospList">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/GetHospList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityList">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/GetFacilityList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadMovi">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/MediaUploadMovi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaUploadImg">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/MediaUploadImg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaDelete">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/MediaDelete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MediaDeleteImg">
+      <soap12:operation soapAction="http://video.media.inc.co.jp/service/MediaDeleteImg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VideoUploadService">
+    <wsdl:port name="VideoUploadServiceSoap" binding="tns:VideoUploadServiceSoap">
+      <soap:address location="https://localhost:44330/VideoUploadService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="VideoUploadServiceSoap12" binding="tns:VideoUploadServiceSoap12">
+      <soap12:address location="https://localhost:44330/VideoUploadService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
