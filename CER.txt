@@ -1,3 +1,11 @@
+----------------20210225----------------
+
+java jp.co.inc.media.video.utils.InstallCert testmov.withyou.media:443
+
+keytool -exportcert -alias testmov.withyou.media-1 -keystore jssecacerts -storepass changeit -file testmov.withyou.media2021.cer
+
+keytool -importcert -alias testmov.withyou.media2020 -keystore C:/tools/eclipse_workspace/VideoManager/bin/devmov-withyou-media-cacerts -storepass changeit -file testmov.withyou.media2021.cer
+
 ----------------20210106----------------
 https://qiita.com/opengl-8080/items/51bef25aa05ecd929a3d
 
